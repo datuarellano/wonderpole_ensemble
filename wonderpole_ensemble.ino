@@ -126,7 +126,6 @@ int freqs[8] = {mtof(57), mtof(59), mtof(61), mtof(64), mtof(66), mtof(69), mtof
 #include "accelerometer_advanced_setup.h"
 #include "accelerometer.h"
 
-// #include "accelerometer_old.h"
 
 //////////////////////////////////////////////////////////////////////
 //// ARDUINO Setup Block /////////////////////////////////////////////

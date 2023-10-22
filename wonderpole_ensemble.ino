@@ -77,8 +77,6 @@ Preset rib_preset3;
 Preset acc_preset1;
 Preset acc_preset2;
 Preset acc_preset3;
-Preset acc_preset4;
-Preset acc_preset5;
 
 bool gate = false;
 byte preset;

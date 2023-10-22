@@ -50,6 +50,8 @@ void ribbonMode() {
 void ribbon() {
   ribbonMode();
 
+///////////////////////////////
+// PRESET 1 ///////////////////
   if (preset == 1)
   {
     sine0.setFreq(freq);
@@ -72,6 +74,9 @@ void ribbon() {
     }
   }
 
+/////////////////////////////
+// PRESET 2 /////////////////
+// Default sound is same as Preset 1 except notes are played staccato using a delay timer
   if (preset == 2) 
   {
     sine0.setFreq(freq);
@@ -79,10 +84,7 @@ void ribbon() {
     rib_preset2.attack = 1;
     rib_preset2.decay = 20;
     rib_preset2.sustain = 20;
-    rib_preset2.release = 30;
-    // remap tempo knob value
-    int adsr = rib_preset2.attack + rib_preset2.decay + rib_preset2.sustain + rib_preset2.release;
-    tempo = map(knob1, 0, 1023, -adsr, 1000);
+    rib_preset2.release = 100;
     envelope4.setTimes(rib_preset2.attack, rib_preset2.decay, rib_preset2.sustain, rib_preset2.release);
     envelope4.setLevels(255, 255, 255, 0);
     rib_preset2.duration = rib_preset2.attack + rib_preset2.decay + rib_preset2.sustain + rib_preset2.release + tempo; 
@@ -102,6 +104,8 @@ void ribbon() {
     }
   }
 
+/////////////////////////////
+// PRESET 3 /////////////////
   if (preset == 3) 
   {
     noise.setFreq(10);

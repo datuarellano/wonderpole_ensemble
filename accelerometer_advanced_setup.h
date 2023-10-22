@@ -1,7 +1,13 @@
 /*
-Most of the code contained here is taken from:
+Code contained here is taken from:
 https://github.com/algomusic/Mozzi_MPU6050/blob/main/Mozzi_MPU6050.ino
+This is a great solution which reads "an MPU6050 accelerometer using 
+I2C communication without blocking audio synthesis".
+Gyro readings are commented out, and Serial print statements were 
+removed from the code.
 */
+
+#include <twi_nonblock.h>
 
 static volatile byte acc_status = 0;
 #define ACC_IDLE 0
@@ -98,6 +104,9 @@ void updateAccelerometer() {
       accx = (accbytedata[0] << 8 | accbytedata[1]) >> 7; // accelerometer x reading, reduced to 8 bit
       accy = (accbytedata[2] << 8 | accbytedata[3]) >> 7; // accelerometer y reading, 8 bit
       accz = (accbytedata[4] << 8 | accbytedata[5]) >> 7; // accelerometer z reading
+      // gyrox = (accbytedata[8] << 8 | accbytedata[9]) >> 7; // gyro x reading, reduced to 8 bit
+      // gyroy = (accbytedata[10] << 8 | accbytedata[11]) >> 7; // gyro y reading, 8 bit
+      // gyroz = (accbytedata[12] << 8 | accbytedata[13]) >> 7; // gyro z reading
 
       initiate_read_accelero();
 

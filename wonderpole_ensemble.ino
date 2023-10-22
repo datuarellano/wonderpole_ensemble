@@ -9,7 +9,6 @@
 #include <tables/whitenoise8192_int8.h>
 #include <mozzi_midi.h>
 #include <mozzi_rand.h>
-#include <twi_nonblock.h>
 
 //////// Include other libraries
 #include <Bounce2.h>

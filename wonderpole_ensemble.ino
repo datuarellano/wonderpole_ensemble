@@ -207,15 +207,14 @@ AudioOutput_t updateAudio()
   // Create submix variables
   unsigned int acc1, acc2, acc3, acc4, acc5, acc6, xyz, rib;
   
-  // Ribbon mode submixes
+  // Ribbon mode submixes (PLAY MODE: 1)
   if (play_mode == 1) 
   {
-    if (preset == 1 && switch4 == true) rib = envelope4.next() * sine0.next() >> 2;
-    else if (preset == 1 && switch4 == false) rib = envelope4.next() * saw0.next() >> 2;
+    // If preset is either 1 or 2, custom switch toggles between sine and sawtooth waves
+    if (preset != 3 && switch4 == true) rib = envelope4.next() * sine0.next() >> 2;
+    else if (preset != 3 && switch4 == false) rib = envelope4.next() * saw0.next() >> 2;
 
-    if (preset == 2 && switch4 == true) rib = envelope4.next() * sine0.next() >> 2;
-    else if (preset == 2 && switch4 == false) rib = envelope4.next() * saw0.next() >> 2;
-
+    // If preset is 3 and custom switch is in left position
     if (preset == 3 && switch4 == true) {
       rib = envelope4.next() *
       ( 
@@ -225,6 +224,7 @@ AudioOutput_t updateAudio()
         (sine0.next() * saw0.next())
       ) >> 3;
     }
+    // If preset is 3 and custom switch is in right position
     else if (preset == 3 && switch4 == false) {
       rib = envelope4.next() *
       ( 
@@ -233,7 +233,8 @@ AudioOutput_t updateAudio()
       ) >> 3;
     }
   }
-  // Accelerometer mode submixes
+  
+  // Accelerometer mode submixes (PLAY MODE: 0)
   else
   {
     acc1 = envelope1.next() * sine1.next() >> 3;

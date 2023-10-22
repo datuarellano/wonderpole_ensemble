@@ -15,7 +15,7 @@
 
 /////// Define ARDUINO I/O pins
 #define RIBBON_PIN A0
-#define POT_PIN A1
+#define POT1_PIN A1
 #define POT2_PIN A2
 #define POT3_PIN A3
 // NOTE: PINs A4 and A5 are connected to the accelerometer module

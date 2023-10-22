@@ -33,7 +33,7 @@ bool gateButton()
 
 // Tempo control knob
 unsigned int tempoKnob() {
-  knob1 = mozziAnalogRead(POT_PIN);
+  knob1 = mozziAnalogRead(POT1_PIN);
   return map(knob1, 0, 1023, 0, 1000); // basic mapping can be overriden
 }
 

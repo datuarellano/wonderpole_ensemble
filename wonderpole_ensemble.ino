@@ -101,11 +101,6 @@ int accz;
 int new_accx;
 int new_accy;
 
-int knob1;
-int knob2;
-int knob3;
-bool switch4;
-
 unsigned long ms = millis();
 unsigned long readTime = ms;
 
@@ -133,10 +128,12 @@ void setup()
 //////////////////////////////////////////////////////////////////////
 void updateControl()
 {
+  readPots();
+  updateButtonsSwitches();
   gate = gateButton();
   preset = presetSwitch();
   tempo = tempoKnob();
-  octave = octaveKnob();
+  octave = pitchKnob();
   play_mode = playmodeSwitch();
   rib_mode = ribbonmodeSwitch();
   switch4 = customSwitch();

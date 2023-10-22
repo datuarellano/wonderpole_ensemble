@@ -3,7 +3,7 @@ int ribbonRead() {
 }
 
 int ribbonCalibrate() {
-  return map(mozziAnalogRead(POT4_PIN), 0, 1023, 0, 100);
+  return map(knob4, 0, 1023, 0, 100);
 }
 
 void ribbonMode() {

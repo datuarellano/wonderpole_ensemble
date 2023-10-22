@@ -91,6 +91,7 @@ bool accz_trigger = false;
 long previousTime = millis();
 int rib_val;
 int rib_lowest;
+int rib_highest;
 
 // Declare accelerometer xyz variables
 int accx; 

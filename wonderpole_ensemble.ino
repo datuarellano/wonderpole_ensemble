@@ -83,7 +83,6 @@ int tempo;
 float octave;
 bool rib_mode = 0;
 bool play_mode = 0;
-float gain;
 byte accy_left_vol;
 byte accy_right_vol;
 byte accx_fore_vol;

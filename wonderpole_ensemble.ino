@@ -1,14 +1,19 @@
+/* ======================================================================
+ * WONDERPOLE ENSEMBLE (The Wonderpole Project)
+ * copyright 2023, Datu Arellano 
+====================================================================== */
 
-//////// Include MOZZI Library and related components
+//////// Include MOZZI Library and related modules
 #include <MozziGuts.h>
 #include <Oscil.h>
 #include <EventDelay.h>
 #include <ADSR.h>
+#include <mozzi_midi.h>
+#include <mozzi_rand.h>
+//////// Include MOZZI wavetables
 #include <tables/sin2048_int8.h>
 #include <tables/saw_analogue512_int8.h>
 #include <tables/whitenoise8192_int8.h>
-#include <mozzi_midi.h>
-#include <mozzi_rand.h>
 
 //////// Include other libraries
 #include <Bounce2.h>
@@ -20,8 +25,6 @@
 #define POT3_PIN A3
 // NOTE: PINs A4 and A5 are connected to the accelerometer module
 #define POT4_PIN A6
-#define LED_PIN 13
-#define LED2_PIN 12
 #define BUTTON_PIN 2
 #define SWITCH_PIN 3
 #define SWITCH2_PIN 4
@@ -29,6 +32,8 @@
 #define SWITCH3B_PIN 6
 #define SWITCH4_PIN 7
 // NOTE: PIN D9 is being used by Mozzi as PWM sound out
+#define LED2_PIN 12
+#define LED_PIN 13
 
 /////// Define MOZZI control rate
 #define CONTROL_RATE 128 // Hz, powers of 2 are most reliable
@@ -60,6 +65,7 @@ ADSR<AUDIO_RATE, AUDIO_RATE> envelope3;
 ADSR<AUDIO_RATE, AUDIO_RATE> envelope4;
 ADSR<AUDIO_RATE, AUDIO_RATE> envelope5;
 
+// This struct is for grouping synth parameters into presets
 struct Preset {
   unsigned int attack;
   unsigned int decay;
@@ -69,6 +75,7 @@ struct Preset {
   int freq;
 };
 
+// Preset variables
 Preset rib_preset1;
 Preset rib_preset2;
 Preset rib_preset3;
@@ -76,32 +83,32 @@ Preset acc_preset1;
 Preset acc_preset2;
 Preset acc_preset3;
 
-bool gate = false;
+// Control variables
 byte preset;
 int freq;
 int tempo;
 float octave;
 bool rib_mode = 0;
 bool play_mode = 0;
-byte accy_left_vol;
-byte accy_right_vol;
-byte accx_fore_vol;
-byte accx_back_vol;
-bool accz_trigger = false;
-long previousTime = millis();
+bool gate = false;
+
+// Ribbon variables
 int rib_val;
 int rib_lowest;
 int rib_highest;
 
-// Declare accelerometer xyz variables
+// Accelerometer variables
 int accx; 
 int accy; 
-int accz;
-
-// Declare new remapped X and Y variables
+int accz; 
 int new_accx;
 int new_accy;
+byte accy_left_vol;
+byte accy_right_vol;
+byte accx_fore_vol;
+byte accx_back_vol;
 
+// Variables used for timing
 unsigned long ms = millis();
 unsigned long readTime = ms;
 
@@ -111,29 +118,44 @@ int max_tempo = 1200;
 /// List of MIDI notes converted to frequencies using the mtof() function
 int freqs[8] = {mtof(57), mtof(59), mtof(61), mtof(64), mtof(66), mtof(69), mtof(71), mtof(73)};
 
-//////// Include external code
+//////// Include custom code
+/* 
+  controls.h contains interface controls (pots, switches, buttons)
+*/
 #include "controls.h"
+/* 
+  ribbon.h contains code that handles the ribbon controller 
+*/
 #include "ribbon.h"
+/*  
+  accelerometer_advanced_setup.h contains important code that makes
+  the accelerometer module play nicely with MOZZI
+*/
 #include "accelerometer_advanced_setup.h"
+/*
+  accelerometer.h contains custom accelerometer functions
+*/ 
 #include "accelerometer.h"
 
-
-//////////////////////////////////////////////////////////////////////
-//// ARDUINO Setup Block /////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////
+/* ======================================================================
+  ARDUINO Setup Block
+*/
 void setup()
 {
   Serial.begin(9600);
   #include "setup.h"
 }
 
-//////////////////////////////////////////////////////////////////////
-//// MOZZI Update Control Block //////////////////////////////////////
-//////////////////////////////////////////////////////////////////////
+/* ======================================================================
+  MOZZI Update Control Block
+*/
 void updateControl()
 {
+  // Run interface read and update functions
   readPots();
   updateButtonsSwitches();
+  
+  // Run control functions and store values in variables
   gate = gateButton();
   preset = presetSwitch();
   tempo = tempoKnob();
@@ -154,9 +176,9 @@ void updateControl()
   }
 }
 
-//////////////////////////////////////////////////////////////////////
-//// MOZZI Update Audio Block ////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////
+/* ======================================================================
+  MOZZI Update Audio Block
+*/
 AudioOutput_t updateAudio()
 {
   // Update envelopes
@@ -212,10 +234,11 @@ AudioOutput_t updateAudio()
   else return MonoOutput::from16Bit(xyz);
 }
 
-
-//////////////////////////////////////////////////////////////////////
-//// ARDUINO Loop Block //////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////
+/* ======================================================================
+  ARDUINO Loop Block
+  All we need inside the loop is the required MOZZI audioHook() function.
+  It is best to avoid placing anything else in here.
+*/
 void loop() {
-  audioHook(); // REQUIRED! And there's no need to do anything in here.
+  audioHook();
 }

@@ -66,7 +66,6 @@ struct Preset {
   unsigned int decay;
   unsigned int sustain;
   unsigned int release;
-  unsigned int time_pad;
   unsigned int duration;
   int freq;
 };

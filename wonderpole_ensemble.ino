@@ -6,9 +6,7 @@
 #include <ADSR.h>
 #include <tables/sin2048_int8.h>
 #include <tables/saw_analogue512_int8.h>
-#include <tables/triangle512_int8.h>
 #include <tables/whitenoise8192_int8.h>
-#include <tables/cos2048_int8.h>
 #include <mozzi_midi.h>
 #include <mozzi_rand.h>
 #include <twi_nonblock.h>

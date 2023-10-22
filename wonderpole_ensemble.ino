@@ -52,7 +52,6 @@ Oscil<SAW_ANALOGUE512_NUM_CELLS, AUDIO_RATE> saw1(SAW_ANALOGUE512_DATA);
 
 ////////// Create event delays for timing/sequencing
 EventDelay noteDelay;
-EventDelay ledDelay;
 
 //////////////// Create envelopes
 ADSR<AUDIO_RATE, AUDIO_RATE> envelope1;

@@ -1,5 +1,3 @@
-setup_accelero();
-
 // Button setup
 button.attach(BUTTON_PIN, INPUT_PULLUP);
 button.interval(50);
@@ -28,11 +26,11 @@ custom_switch.attach(SWITCH4_PIN, INPUT_PULLUP);
 custom_switch.interval(50);
 custom_switch.setPressedState(LOW);
 
-startMozzi();
-
+// LED setup
 pinMode(LED2_PIN, OUTPUT);
-
 pinMode(LED_PIN, OUTPUT);
+
+// Startup LED blink
 digitalWrite(LED_PIN, HIGH);
 digitalWrite(LED2_PIN, LOW);
 delay(300);
@@ -47,3 +45,9 @@ digitalWrite(LED2_PIN, HIGH);
 delay(200);
 digitalWrite(LED_PIN, HIGH);
 digitalWrite(LED2_PIN, LOW);
+
+// Run accelerometer setup
+setup_accelero();
+
+// Run start Mozzi
+startMozzi();

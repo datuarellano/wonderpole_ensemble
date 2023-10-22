@@ -46,12 +46,12 @@ void accelerometerGo() {
   //////////////////////////////////////////////////////////////////////
   ///// DRONE SOUNDS /// X axis forward/backward ///////////////////////
   //////////////////////////////////////////////////////////////////////
-  // aSaw0.setFreq(freqs[0] * octave);
-  // aSaw1.setFreq(freqs[2] * octave);
-  // aSaw0.setFreq(freqs[1] * octave);
-  // aSaw1.setFreq(freqs[3] * octave);
-  aSaw0.setFreq(freqs[4] * octave);
-  aSaw1.setFreq(freqs[5] * octave);
+  // saw0.setFreq(freqs[0] * octave);
+  // saw1.setFreq(freqs[2] * octave);
+  // saw0.setFreq(freqs[1] * octave);
+  // saw1.setFreq(freqs[3] * octave);
+  saw0.setFreq(freqs[4] * octave);
+  saw1.setFreq(freqs[5] * octave);
 
   int rib_val = map(ribbonRead(), 200, 1023, 5, 1500);
 
@@ -68,11 +68,11 @@ void accelerometerGo() {
     acc_preset2.freq = 1070 + knob2 + rib_val; 
 
     if(gate == false) {
-      aSine2.setFreq(acc_preset2.freq);
+      sine2.setFreq(acc_preset2.freq);
       envelope2.setTimes(10,50,50,10);
       envelope2.noteOn();
       
-      aSine1.setFreq(acc_preset1.freq);
+      sine1.setFreq(acc_preset1.freq);
       envelope1.setTimes(10,50,50,10);
       envelope1.noteOn();
     }
@@ -83,7 +83,7 @@ void accelerometerGo() {
   //////////////////////////////////////////////////////////////////////
   if (accy <= -y_threshold) 
   {
-    aNoise.setFreq(1);
+    noise.setFreq(1);
   }
 
   // Set all (except stab sound) to zero volume when gate button is pressed

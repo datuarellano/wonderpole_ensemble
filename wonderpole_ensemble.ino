@@ -42,13 +42,13 @@ Bounce2::Button presetB_switch = Bounce2::Button();
 Bounce2::Button custom_switch = Bounce2::Button();
 
 ///// Create MOZZI oscillators
-Oscil<WHITENOISE8192_NUM_CELLS, AUDIO_RATE> aNoise(WHITENOISE8192_DATA);
-Oscil<SIN2048_NUM_CELLS, AUDIO_RATE> aSine(SIN2048_DATA);
-Oscil<SIN2048_NUM_CELLS, AUDIO_RATE> aSine1(SIN2048_DATA);
-Oscil<SIN2048_NUM_CELLS, AUDIO_RATE> aSine2(SIN2048_DATA);
-Oscil<SIN2048_NUM_CELLS, AUDIO_RATE> aSine3(SIN2048_DATA);
-Oscil<SAW_ANALOGUE512_NUM_CELLS, AUDIO_RATE> aSaw0(SAW_ANALOGUE512_DATA);
-Oscil<SAW_ANALOGUE512_NUM_CELLS, AUDIO_RATE> aSaw1(SAW_ANALOGUE512_DATA);
+Oscil<WHITENOISE8192_NUM_CELLS, AUDIO_RATE> noise(WHITENOISE8192_DATA);
+Oscil<SIN2048_NUM_CELLS, AUDIO_RATE> sine0(SIN2048_DATA);
+Oscil<SIN2048_NUM_CELLS, AUDIO_RATE> sine1(SIN2048_DATA);
+Oscil<SIN2048_NUM_CELLS, AUDIO_RATE> sine2(SIN2048_DATA);
+Oscil<SIN2048_NUM_CELLS, AUDIO_RATE> sine3(SIN2048_DATA);
+Oscil<SAW_ANALOGUE512_NUM_CELLS, AUDIO_RATE> saw0(SAW_ANALOGUE512_DATA);
+Oscil<SAW_ANALOGUE512_NUM_CELLS, AUDIO_RATE> saw1(SAW_ANALOGUE512_DATA);
 
 ////////// Create event delays for timing/sequencing
 EventDelay noteDelay;
@@ -176,38 +176,38 @@ AudioOutput_t updateAudio()
   // Ribbon mode submixes
   if (play_mode == 1) 
   {
-    if (preset == 1 && switch4 == true) rib = envelope4.next() * aSine.next() >> 2;
-    else if (preset == 1 && switch4 == false) rib = envelope4.next() * aSaw0.next() >> 2;
+    if (preset == 1 && switch4 == true) rib = envelope4.next() * sine0.next() >> 2;
+    else if (preset == 1 && switch4 == false) rib = envelope4.next() * saw0.next() >> 2;
 
-    if (preset == 2 && switch4 == true) rib = envelope4.next() * aSine.next() >> 2;
-    else if (preset == 2 && switch4 == false) rib = envelope4.next() * aSaw0.next() >> 2;
+    if (preset == 2 && switch4 == true) rib = envelope4.next() * sine0.next() >> 2;
+    else if (preset == 2 && switch4 == false) rib = envelope4.next() * saw0.next() >> 2;
 
     if (preset == 3 && switch4 == true) {
       rib = envelope4.next() *
       ( 
-        aSaw1.next() +
-        aSine1.next() +
-        aSine2.next() +
-        (aSine.next() * aSaw0.next())
+        saw1.next() +
+        sine1.next() +
+        sine2.next() +
+        (sine0.next() * saw0.next())
       ) >> 3;
     }
     else if (preset == 3 && switch4 == false) {
       rib = envelope4.next() *
       ( 
-        (aSine.next() * rand(0, 5)) + 
-        (aSine1.next() * aSaw1.next()) 
+        (sine0.next() * rand(0, 5)) + 
+        (sine1.next() * saw1.next()) 
       ) >> 3;
     }
   }
   // Accelerometer mode submixes
   else
   {
-    acc1 = envelope1.next() * aSine1.next() >> 3;
-    acc2 = envelope2.next() * aSine2.next() >> 3;
-    acc3 = accy_left_vol * aNoise.next() >> 3;
-    acc4 = envelope5.next() * aSine3.next();
-    acc5 = accx_fore_vol * aSaw0.next() >> 2;
-    acc6 = accx_back_vol * aSaw1.next() >> 2;
+    acc1 = envelope1.next() * sine1.next() >> 3;
+    acc2 = envelope2.next() * sine2.next() >> 3;
+    acc3 = accy_left_vol * noise.next() >> 3;
+    acc4 = envelope5.next() * sine3.next();
+    acc5 = accx_fore_vol * saw0.next() >> 2;
+    acc6 = accx_back_vol * saw1.next() >> 2;
     xyz = acc1 + acc2 + acc3 + acc4 + acc5 + acc6;
   } 
 

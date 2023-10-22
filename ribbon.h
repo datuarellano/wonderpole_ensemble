@@ -52,8 +52,8 @@ void ribbon() {
 
   if (preset == 1)
   {
-    aSine.setFreq(freq);
-    aSaw0.setFreq(freq);
+    sine0.setFreq(freq);
+    saw0.setFreq(freq);
     rib_preset1.attack = 500;
     rib_preset1.decay = 100;
     rib_preset1.sustain = 100;
@@ -74,8 +74,8 @@ void ribbon() {
 
   if (preset == 2) 
   {
-    aSine.setFreq(freq);
-    aSaw0.setFreq(freq);
+    sine0.setFreq(freq);
+    saw0.setFreq(freq);
     rib_preset2.attack = 1;
     rib_preset2.decay = 20;
     rib_preset2.sustain = 20;
@@ -104,20 +104,20 @@ void ribbon() {
 
   if (preset == 3) 
   {
-    aNoise.setFreq(10);
-    aSine1.setFreq(ribbonRead() * tempo);
-    aSine2.setFreq(ribbonRead() * 4);
+    noise.setFreq(10);
+    sine1.setFreq(ribbonRead() * tempo);
+    sine2.setFreq(ribbonRead() * 4);
     if (customKnob() > 512)
     {
       int r = rand(1,3);
-      aSaw0.setFreq(freq*r);
-      aSaw1.setFreq(freq*r);
-      aSine.setFreq(freq*r);
+      saw0.setFreq(freq*r);
+      saw1.setFreq(freq*r);
+      sine0.setFreq(freq*r);
     }
     else {
-      aSaw0.setFreq(freq/16);
-      aSaw1.setFreq(freq/2);
-      aSine.setFreq(freq/16);
+      saw0.setFreq(freq/16);
+      saw1.setFreq(freq/2);
+      sine0.setFreq(freq/16);
     }
     rib_preset3.attack = tempoKnob();
     rib_preset3.decay = 10;

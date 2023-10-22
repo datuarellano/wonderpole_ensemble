@@ -104,6 +104,9 @@ int new_accy;
 unsigned long ms = millis();
 unsigned long readTime = ms;
 
+int min_tempo = -100;
+int max_tempo = 1200;
+
 /// List of MIDI notes converted to frequencies using the mtof() function
 int freqs[8] = {mtof(57), mtof(59), mtof(61), mtof(64), mtof(66), mtof(69), mtof(71), mtof(73)};
 

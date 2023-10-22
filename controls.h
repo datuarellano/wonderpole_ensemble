@@ -52,9 +52,9 @@ bool gateButton()
   }
 }
 
-// Tempo control knob remapped
+// Tempo control knob remapped to min and max_tempo
 unsigned int tempoKnob() {
-  return map(knob1, 0, 1023, 0, 1000); // basic mapping can be overriden
+  return map(knob1, 0, 1023, min_tempo, max_tempo);
 }
 
 // Octave control knob returns 0.5, 1, or 2

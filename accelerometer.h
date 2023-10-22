@@ -1,12 +1,17 @@
+/* ======================================================================
+  accelerometerGo() contains logic for the accelerometer mode
+  as well as sound design for when the pole is tilted to the
+  left, right, forward, and back
+*/
 void accelerometerGo() {
-  int x_threshold = 20;
-  int x_max = 90;
-  int y_threshold = 20;
-  int y_max = 90;
-  
+  // Constrain x and y values  
   accx = constrain(accx, -x_max, x_max);
   accy = constrain(accy, -y_max, y_max);
   
+  /*
+    Check which direction the pole is tilted,
+    then increase the amplitude of the sound assigned to that direction.
+  */
   // X-Axis FORWARD
   if (accx <= -x_threshold)
   {
@@ -46,18 +51,13 @@ void accelerometerGo() {
   //////////////////////////////////////////////////////////////////////
   ///// DRONE SOUNDS /// X axis forward/backward ///////////////////////
   //////////////////////////////////////////////////////////////////////
-  // saw0.setFreq(freqs[0] * octave);
-  // saw1.setFreq(freqs[2] * octave);
-  // saw0.setFreq(freqs[1] * octave);
-  // saw1.setFreq(freqs[3] * octave);
-  saw0.setFreq(freqs[4] * octave);
-  saw1.setFreq(freqs[5] * octave);
-
-  int rib_val = map(ribbonRead(), 200, 1023, 5, 1500);
+  saw0.setFreq(drone_fore_freq * octave);
+  saw1.setFreq(drone_back_freq * octave);
 
   //////////////////////////////////////////////////////////////////////
   ///// CICADA SOUNDS /// Y axis --> RIGHT /////////////////////////////
   //////////////////////////////////////////////////////////////////////
+  int rib_val = map(ribbonRead(), 200, 1023, 5, 1500);
   if (accy >= y_threshold) 
   {
     // 1:
@@ -86,7 +86,7 @@ void accelerometerGo() {
     noise.setFreq(1);
   }
 
-  // Set all (except stab sound) to zero volume when gate button is pressed
+  // Set to zero volume when gate button is pressed
   if (gate == true) {
     accx_fore_vol = 0;
     accx_back_vol = 0;

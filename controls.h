@@ -4,7 +4,9 @@ int knob3;
 int knob4;
 bool switch4;
 
-// Read potentiometers
+/* ======================================================================
+  Read potentiometers  
+*/
 void readPots() {
   knob1 = mozziAnalogRead(POT1_PIN);
   knob2 = mozziAnalogRead(POT2_PIN);
@@ -12,7 +14,9 @@ void readPots() {
   knob4 = mozziAnalogRead(POT4_PIN);
 }
 
-// Update buttons and switches
+/* ======================================================================
+  Update buttons and switches
+*/
 void updateButtonsSwitches() {
   playmode_switch.update();
   ribmode_switch.update();
@@ -22,7 +26,79 @@ void updateButtonsSwitches() {
   button.update();
 }
 
-// Preset switch returns a value of 1, 2, or 3
+/* ======================================================================
+  Gate button (S5; tactile switch with red LED)
+  Returns true or false
+*/
+bool gateButton() 
+{
+  if (button.isPressed()) 
+  {
+    return true;
+  } 
+  else 
+  { 
+    return false;
+  }
+}
+
+/* ======================================================================
+  Tempo control knob (POT1; label: TIME)
+  Remapped to min and max_tempo
+*/
+unsigned int tempoKnob() {
+  return map(knob1, 0, 1023, min_tempo, max_tempo);
+}
+
+/* ======================================================================
+  Octave control knob (POT2; label: PITCH)
+  Returns 0.5, 1, or 2
+*/
+float pitchKnob() {
+  if (knob2 >= 0 && knob2 < 250) return 0.5;
+  else if (knob2 >= 251 && knob2 < 450) return 1;
+  else return 2;
+}
+
+/* ======================================================================
+  Custom knob (POT3; label: CUSTOM)
+  Customize to your liking!
+*/
+unsigned int customKnob() {
+  return knob3;
+}
+
+/* ======================================================================
+  Play mode switch (S1; label: PLAY MODE)
+  Returns true or false
+*/
+bool playmodeSwitch() {
+  if (playmode_switch.isPressed()) return true;
+  else return false;
+}
+
+/* ======================================================================
+  Ribbon mode switch (S2; label: RIBBON MODE)
+  Returns true or false
+*/
+bool ribbonmodeSwitch() {
+  if (ribmode_switch.isPressed()) return true;
+  else return false;
+}
+
+/* ======================================================================
+  Custom switch (S3; label: CUSTOM)
+  Returns true or false
+*/
+bool customSwitch() {
+  if (custom_switch.isPressed()) return true;
+  else return false; 
+}
+
+/* ======================================================================
+  Preset switch (S4; label: PRESET)
+  Returns a value of 1, 2, or 3
+*/
 byte presetSwitch() 
 {
   if (presetA_switch.isPressed()) 
@@ -37,52 +113,4 @@ byte presetSwitch()
   {
     return 2;
   }
-}
-
-// Gate button returns true or false.
-bool gateButton() 
-{
-  if (button.isPressed()) 
-  {
-    return true;
-  } 
-  else 
-  { 
-    return false;
-  }
-}
-
-// Tempo control knob remapped to min and max_tempo
-unsigned int tempoKnob() {
-  return map(knob1, 0, 1023, min_tempo, max_tempo);
-}
-
-// Octave control knob returns 0.5, 1, or 2
-float pitchKnob() {
-  if (knob2 >= 0 && knob2 < 250) return 0.5;
-  else if (knob2 >= 251 && knob2 < 450) return 1;
-  else return 2;
-}
-
-// Play mode switch returns true or false
-bool playmodeSwitch() {
-  if (playmode_switch.isPressed()) return true;
-  else return false;
-}
-
-// Ribbon mode switch returns true or false
-bool ribbonmodeSwitch() {
-  if (ribmode_switch.isPressed()) return true;
-  else return false;
-}
-
-// Custom knob. Customize to your liking!
-unsigned int customKnob() {
-  return knob3;
-}
-
-// Custom switch returns true or false
-bool customSwitch() {
-  if (custom_switch.isPressed()) return true;
-  else return false; 
 }

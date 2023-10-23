@@ -45,7 +45,7 @@ void ribbonMode() {
   ribbonCalibrate();
   
   // Create array of ribbon segments
-  int seg[] = {0, 100, 200, 300, 400, 500, 600, 700};
+  int seg[] = {100, 200, 300, 400, 500, 600, 700, 800};
 
   // Mode 1 subdivides the ribbon into 8 segments
   if (rib_mode == 1) 

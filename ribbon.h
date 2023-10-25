@@ -163,7 +163,6 @@ void ribbon() {
   */
   if (preset == 3) 
   {
-    noise.setFreq(10);
     sine1.setFreq(ribbonRead() * tempo);
     sine2.setFreq(ribbonRead() * 4);
     if (customKnob() > 512)

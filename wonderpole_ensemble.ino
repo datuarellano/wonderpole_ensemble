@@ -31,7 +31,6 @@
 //////// Include MOZZI wavetables
 #include <tables/sin2048_int8.h>
 #include <tables/saw_analogue512_int8.h>
-#include <tables/whitenoise8192_int8.h>
 
 //////// Include other libraries
 #include <Bounce2.h>
@@ -65,10 +64,11 @@ Bounce2::Button presetB_switch = Bounce2::Button();
 Bounce2::Button custom_switch = Bounce2::Button();
 
 ///// Create MOZZI oscillators
-Oscil<WHITENOISE8192_NUM_CELLS, AUDIO_RATE> noise(WHITENOISE8192_DATA);
 Oscil<SIN2048_NUM_CELLS, AUDIO_RATE> sine0(SIN2048_DATA);
 Oscil<SIN2048_NUM_CELLS, AUDIO_RATE> sine1(SIN2048_DATA);
 Oscil<SIN2048_NUM_CELLS, AUDIO_RATE> sine2(SIN2048_DATA);
+Oscil<SIN2048_NUM_CELLS, AUDIO_RATE> sine3(SIN2048_DATA);
+Oscil<SIN2048_NUM_CELLS, AUDIO_RATE> sine4(SIN2048_DATA);
 Oscil<SAW_ANALOGUE512_NUM_CELLS, AUDIO_RATE> saw0(SAW_ANALOGUE512_DATA);
 Oscil<SAW_ANALOGUE512_NUM_CELLS, AUDIO_RATE> saw1(SAW_ANALOGUE512_DATA);
 
@@ -77,8 +77,6 @@ EventDelay noteDelay;
 
 //////////////// Create envelopes
 ADSR<AUDIO_RATE, AUDIO_RATE> envelope_rib;
-ADSR<AUDIO_RATE, AUDIO_RATE> envelope_acc1;
-ADSR<AUDIO_RATE, AUDIO_RATE> envelope_acc2;
 
 // This struct is for grouping synth parameters into presets
 struct Preset {
@@ -196,11 +194,9 @@ AudioOutput_t updateAudio()
 {
   // Update envelopes
   envelope_rib.update();
-  envelope_acc1.update();
-  envelope_acc2.update();
   
   // Declare submix variables
-  unsigned int acc1, acc2, acc3, acc4, acc5, xyz, rib;
+  unsigned int acc0, acc1, acc2, acc3, xyz, rib;
   
   // Ribbon mode submixes (PLAY MODE: 1)
   if (play_mode == 1) 
@@ -238,12 +234,11 @@ AudioOutput_t updateAudio()
   // Accelerometer mode submixes (PLAY MODE: 0)
   else
   {
-    acc1 = envelope_acc1.next() * sine1.next() >> 3;
-    acc2 = envelope_acc2.next() * sine2.next() >> 3;
-    acc3 = accy_left_vol * noise.next() >> 3;
-    acc4 = accx_fore_vol * saw0.next() >> 2;
-    acc5 = accx_back_vol * saw1.next() >> 2;
-    xyz = acc1 + acc2 + acc3 + acc4 + acc5;
+    acc0 = accx_fore_vol * (sine1.next() >> 3);
+    acc1 = accx_back_vol * (sine1.next() >> 3) + (sine2.next() >> 3);
+    acc2 = accy_left_vol * (sine3.next() >> 3) + (sine4.next() >> 3);
+    acc3 = accy_right_vol * (sine3.next() >> 3) + (sine4.next() >> 3);
+    xyz = acc0 + acc1 + acc2 + acc3;
   } 
 
   // Master output

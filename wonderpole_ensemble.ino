@@ -69,7 +69,6 @@ Oscil<WHITENOISE8192_NUM_CELLS, AUDIO_RATE> noise(WHITENOISE8192_DATA);
 Oscil<SIN2048_NUM_CELLS, AUDIO_RATE> sine0(SIN2048_DATA);
 Oscil<SIN2048_NUM_CELLS, AUDIO_RATE> sine1(SIN2048_DATA);
 Oscil<SIN2048_NUM_CELLS, AUDIO_RATE> sine2(SIN2048_DATA);
-Oscil<SIN2048_NUM_CELLS, AUDIO_RATE> sine3(SIN2048_DATA);
 Oscil<SAW_ANALOGUE512_NUM_CELLS, AUDIO_RATE> saw0(SAW_ANALOGUE512_DATA);
 Oscil<SAW_ANALOGUE512_NUM_CELLS, AUDIO_RATE> saw1(SAW_ANALOGUE512_DATA);
 
@@ -77,11 +76,9 @@ Oscil<SAW_ANALOGUE512_NUM_CELLS, AUDIO_RATE> saw1(SAW_ANALOGUE512_DATA);
 EventDelay noteDelay;
 
 //////////////// Create envelopes
-ADSR<AUDIO_RATE, AUDIO_RATE> envelope1;
-ADSR<AUDIO_RATE, AUDIO_RATE> envelope2;
-ADSR<AUDIO_RATE, AUDIO_RATE> envelope3;
-ADSR<AUDIO_RATE, AUDIO_RATE> envelope4;
-ADSR<AUDIO_RATE, AUDIO_RATE> envelope5;
+ADSR<AUDIO_RATE, AUDIO_RATE> envelope_rib;
+ADSR<AUDIO_RATE, AUDIO_RATE> envelope_acc1;
+ADSR<AUDIO_RATE, AUDIO_RATE> envelope_acc2;
 
 // This struct is for grouping synth parameters into presets
 struct Preset {
@@ -198,25 +195,29 @@ void updateControl()
 AudioOutput_t updateAudio()
 {
   // Update envelopes
-  envelope1.update();
-  envelope2.update();
-  envelope3.update();
-  envelope4.update();
-  envelope5.update();
+  envelope_rib.update();
+  envelope_acc1.update();
+  envelope_acc2.update();
   
-  // Create submix variables
-  unsigned int acc1, acc2, acc3, acc4, acc5, acc6, xyz, rib;
+  // Declare submix variables
+  unsigned int acc1, acc2, acc3, acc4, acc5, xyz, rib;
   
   // Ribbon mode submixes (PLAY MODE: 1)
   if (play_mode == 1) 
   {
     // If preset is either 1 or 2, custom switch toggles between sine and sawtooth waves
-    if (preset != 3 && switch4 == true) rib = envelope4.next() * sine0.next() >> 2;
-    else if (preset != 3 && switch4 == false) rib = envelope4.next() * saw0.next() >> 2;
+    if (preset != 3 && switch4 == true)
+    {
+      rib = envelope_rib.next() * sine0.next() >> 2;
+    }
+    else if (preset != 3 && switch4 == false) 
+    {
+      rib = envelope_rib.next() * saw0.next() >> 2;
+    }
 
     // If preset is 3 and custom switch is in left position
     if (preset == 3 && switch4 == true) {
-      rib = envelope4.next() *
+      rib = envelope_rib.next() *
       ( 
         saw1.next() +
         sine1.next() +
@@ -226,7 +227,7 @@ AudioOutput_t updateAudio()
     }
     // If preset is 3 and custom switch is in right position
     else if (preset == 3 && switch4 == false) {
-      rib = envelope4.next() *
+      rib = envelope_rib.next() *
       ( 
         (sine0.next() * rand(0, 5)) + 
         (sine1.next() * saw1.next()) 
@@ -237,18 +238,23 @@ AudioOutput_t updateAudio()
   // Accelerometer mode submixes (PLAY MODE: 0)
   else
   {
-    acc1 = envelope1.next() * sine1.next() >> 3;
-    acc2 = envelope2.next() * sine2.next() >> 3;
+    acc1 = envelope_acc1.next() * sine1.next() >> 3;
+    acc2 = envelope_acc2.next() * sine2.next() >> 3;
     acc3 = accy_left_vol * noise.next() >> 3;
-    acc4 = envelope5.next() * sine3.next();
-    acc5 = accx_fore_vol * saw0.next() >> 2;
-    acc6 = accx_back_vol * saw1.next() >> 2;
-    xyz = acc1 + acc2 + acc3 + acc4 + acc5 + acc6;
+    acc4 = accx_fore_vol * saw0.next() >> 2;
+    acc5 = accx_back_vol * saw1.next() >> 2;
+    xyz = acc1 + acc2 + acc3 + acc4 + acc5;
   } 
 
   // Master output
-  if (play_mode == 1) return MonoOutput::from16Bit(rib);
-  else return MonoOutput::from16Bit(xyz);
+  if (play_mode == 1) 
+  {
+    return MonoOutput::from16Bit(rib);
+  }
+  else 
+  {
+    return MonoOutput::from16Bit(xyz);
+  } 
 }
 
 /* ======================================================================

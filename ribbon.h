@@ -108,16 +108,16 @@ void ribbon() {
     rib_preset1.decay = 100;
     rib_preset1.sustain = 100;
     rib_preset1.release = 400;
-    envelope4.setTimes(rib_preset1.attack, rib_preset1.decay, rib_preset1.sustain, rib_preset1.release);
-    envelope4.setLevels(255, 100, 100, 0);
+    envelope_rib.setTimes(rib_preset1.attack, rib_preset1.decay, rib_preset1.sustain, rib_preset1.release);
+    envelope_rib.setLevels(255, 100, 100, 0);
     if (gate == true)
     {
-      envelope4.noteOn();
+      envelope_rib.noteOn();
       digitalWrite(LED2_PIN, HIGH);
     }
     else
     {
-      envelope4.noteOff();
+      envelope_rib.noteOff();
       digitalWrite(LED2_PIN, LOW);
     }
   }
@@ -135,20 +135,20 @@ void ribbon() {
     rib_preset2.decay = 20;
     rib_preset2.sustain = 20;
     rib_preset2.release = 100;
-    envelope4.setTimes(rib_preset2.attack, rib_preset2.decay, rib_preset2.sustain, rib_preset2.release);
-    envelope4.setLevels(255, 255, 255, 0);
+    envelope_rib.setTimes(rib_preset2.attack, rib_preset2.decay, rib_preset2.sustain, rib_preset2.release);
+    envelope_rib.setLevels(255, 255, 255, 0);
     rib_preset2.duration = rib_preset2.attack + rib_preset2.decay + rib_preset2.sustain + rib_preset2.release + tempo; 
     noteDelay.set(rib_preset2.duration);
     if (noteDelay.ready() && gate == true) 
     {
       noteDelay.start(rib_preset2.duration);   
-      envelope4.noteOn();
+      envelope_rib.noteOn();
       digitalWrite(LED_PIN, LOW);
       digitalWrite(LED2_PIN, HIGH);
     }
     else 
     {
-      envelope4.noteOff();
+      envelope_rib.noteOff();
       digitalWrite(LED_PIN, HIGH);
       digitalWrite(LED2_PIN, LOW);
     }
@@ -182,10 +182,10 @@ void ribbon() {
     rib_preset3.decay = 10;
     rib_preset3.sustain = customKnob();
     rib_preset3.release = customKnob();
-    envelope4.setTimes(rib_preset3.attack, rib_preset3.decay, rib_preset3.sustain, rib_preset3.release);
+    envelope_rib.setTimes(rib_preset3.attack, rib_preset3.decay, rib_preset3.sustain, rib_preset3.release);
     if (gate == true) 
     {
-      envelope4.noteOn();
+      envelope_rib.noteOn();
       digitalWrite(LED2_PIN, HIGH);
       if (switch4 == false)
       {
@@ -196,7 +196,7 @@ void ribbon() {
     }
     else 
     {
-      envelope4.noteOff();
+      envelope_rib.noteOff();
       digitalWrite(LED2_PIN, LOW);
     }
   }

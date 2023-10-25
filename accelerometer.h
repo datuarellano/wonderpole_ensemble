@@ -61,20 +61,20 @@ void accelerometerGo() {
   if (accy >= y_threshold) 
   {
     // 1:
-    envelope1.setADLevels(accy_right_vol, accy_right_vol);
+    envelope_acc1.setADLevels(accy_right_vol, accy_right_vol);
     acc_preset1.freq = 3000 + knob2 + rib_val;
     // 2:
-    envelope2.setADLevels(accy_right_vol, accy_right_vol);
+    envelope_acc2.setADLevels(accy_right_vol, accy_right_vol);
     acc_preset2.freq = 1070 + knob2 + rib_val; 
 
     if(gate == false) {
       sine2.setFreq(acc_preset2.freq);
-      envelope2.setTimes(10,50,50,10);
-      envelope2.noteOn();
+      envelope_acc2.setTimes(10,50,50,10);
+      envelope_acc2.noteOn();
       
       sine1.setFreq(acc_preset1.freq);
-      envelope1.setTimes(10,50,50,10);
-      envelope1.noteOn();
+      envelope_acc1.setTimes(10,50,50,10);
+      envelope_acc1.noteOn();
     }
   }
 

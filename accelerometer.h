@@ -15,14 +15,12 @@ void accelerometerGo() {
   // X-Axis FORWARD
   if (accx <= -x_threshold)
   {
-    new_accx = -(map(accx, -x_threshold, -x_max, 0, -255));
-    accx_fore_vol = new_accx;
+    accx_fore_vol = -(map(accx, -x_threshold, -x_max, 0, -255));
   }
   // X-Axis BACK
   else if (accx >= x_threshold)
   {
-    new_accx = map(accx, x_threshold, x_max, 0, 255);
-    accx_back_vol = new_accx;
+    accx_back_vol = map(accx, x_threshold, x_max, 0, 255);
   }
   // Center QUIET
   else {
@@ -33,14 +31,12 @@ void accelerometerGo() {
   // Y-Axis LEFT
   if (accy <= -y_threshold) 
   {
-    new_accy = -(map(accy, -y_threshold, -y_max, 0, -255));
-    accy_left_vol = new_accy;
+    accy_left_vol = -(map(accy, -y_threshold, -y_max, 0, -255));
   }
   // Y-Axis RIGHT
   else if (accy >= y_threshold) 
   {
-    new_accy = map(accy, y_threshold, y_max, 0, 255);
-    accy_right_vol = new_accy;
+    accy_right_vol = map(accy, y_threshold, y_max, 0, 255);
   }
   // Center QUIET
   else {

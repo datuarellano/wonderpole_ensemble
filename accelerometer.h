@@ -49,15 +49,15 @@ void accelerometerGo() {
   /////////////////////////////////////////////////////
   if (accx <= -x_threshold)
   {
-    sine1.setFreq(freqs[0] * octave);
+    sine1.setFreq(fore_freq * octave);
   }
   /////////////////////////////////////////////////////
   ///// X axis BACK ///////////////////////////////////
   /////////////////////////////////////////////////////
   if (accx >= x_threshold)
   {
-    sine1.setFreq(freqs[4] * octave);
-    sine2.setFreq(freqs[6] * octave);
+    sine1.setFreq(back_freq1 * octave);
+    sine2.setFreq(back_freq2 * octave);
   }
 
   /////////////////////////////////////////////////////
@@ -65,8 +65,8 @@ void accelerometerGo() {
   /////////////////////////////////////////////////////
   if (accy <= -y_threshold) 
   {
-    sine3.setFreq(freqs[5] * octave);
-    sine4.setFreq(freqs[7] * octave);
+    sine3.setFreq(left_freq1 * octave);
+    sine4.setFreq(left_freq2 * octave);
   }
 
   /////////////////////////////////////////////////////
@@ -74,8 +74,8 @@ void accelerometerGo() {
   /////////////////////////////////////////////////////
   if (accy >= y_threshold) 
   { 
-    sine3.setFreq(freqs[1] * octave);
-    sine4.setFreq(freqs[3] * octave);
+    sine3.setFreq(right_freq1 * octave);
+    sine4.setFreq(right_freq2 * octave);
   }
 
   // Set to zero volume when gate button is pressed

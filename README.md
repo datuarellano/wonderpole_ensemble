@@ -26,6 +26,12 @@ Please check [the wiki](https://github.com/datuarellano/wonderpole_ensemble/wiki
 ## License
 The Wonderpole Ensemble is published under the [MIT License](https://github.com/datuarellano/wonderpole_ensemble/blob/master/LICENSE).
 ## Credits
-Concept: Datu Arellano and Malek Lopez
+Concept: Datu Arellano and Malek Lopez <br>
+Design, build, programming, workshops: Datu Arellano <br>
+Manila, Philippines
 
-Design, build, programming, workshops: Datu Arellano 
+## Acknowledgements
+
+Heartfelt gratitude to the following people and institutions who have contributed, in one way or another, to the evolution of the Wonderpole Project:
+
+(In no particular order) Malek Lopez, Dayang Yraola, Erwin Romulo, Create PH, Paschal Berry, Art Gallery of New South Wales, Donna Cher dela Cruz, Diego Arellano, Damian Arellano, Delfin Arellano.

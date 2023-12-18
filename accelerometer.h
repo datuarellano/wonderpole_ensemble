@@ -1,11 +1,12 @@
 /* ======================================================================
-  accelerometerGo() contains logic for the accelerometer mode
+  accelerometer() contains logic for the accelerometer mode
   as well as sound design for when the pole is tilted to the
   left, right, forward, and back
 */
 void accelerometer() {
+  // Update accelerometer
   updateAccelerometer();
-  
+
   // Constrain x and y values  
   accx = constrain(accx, -x_max, x_max);
   accy = constrain(accy, -y_max, y_max);

@@ -159,15 +159,8 @@ void updateControl()
   switch4 = customSwitch();
   
   // Switch between ribbon and accelerometer modes
-  if (play_mode == true) 
-  {
-    ribbon();
-  }
-  else 
-  {
-    updateAccelerometer();
-    accelerometer();
-  }
+  if (play_mode == true) ribbon();
+  else accelerometer();
 }
 
 /* ======================================================================

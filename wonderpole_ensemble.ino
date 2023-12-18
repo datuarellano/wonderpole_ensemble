@@ -166,7 +166,7 @@ void updateControl()
   else 
   {
     updateAccelerometer();
-    accelerometerGo();
+    accelerometer();
   }
 }
 

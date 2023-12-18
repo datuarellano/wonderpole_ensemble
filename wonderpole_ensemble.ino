@@ -79,14 +79,8 @@ Preset acc_preset1;
 Preset acc_preset2;
 Preset acc_preset3;
 
-// Control variables
-byte preset;
-int freq;
-int tempo;
-float octave;
-bool rib_mode = 0;
-bool play_mode = 0;
-bool gate = false;
+// Global control variables
+int freq, pot1, pot2, pot3, pot4;
 
 // Ribbon variables
 int rib_val;
@@ -149,17 +143,8 @@ void updateControl()
   readPots();
   updateButtonsSwitches();
   
-  // Run control functions and store values in variables
-  gate = gateButton();
-  preset = presetSwitch();
-  tempo = tempoKnob();
-  octave = pitchKnob();
-  play_mode = playmodeSwitch();
-  rib_mode = ribbonmodeSwitch();
-  switch4 = customSwitch();
-  
   // Switch between ribbon and accelerometer modes
-  if (play_mode == true) ribbon();
+  if (playmodeSwitch() == true) ribbon();
   else accelerometer();
 }
 
@@ -175,22 +160,22 @@ AudioOutput_t updateAudio()
   // rib = ribbon mode
   // xyz = accelerometer mode
   unsigned int rib, xyz;
-  
+
   // Ribbon mode submixes (PLAY MODE: 1)
-  if (play_mode == 1) 
+  if (playmodeSwitch() == 1) 
   {
     // If preset is either 1 or 2, custom switch toggles between sine and sawtooth waves
-    if (preset != 3 && switch4 == true)
+    if (presetSwitch() != 3 && customSwitch() == true)
     {
       rib = envelope_rib.next() * sine0.next() >> 2;
     }
-    else if (preset != 3 && switch4 == false) 
+    else if (presetSwitch() != 3 && customSwitch() == false) 
     {
       rib = envelope_rib.next() * saw0.next() >> 2;
     }
 
     // If preset is 3 and custom switch is in left position
-    if (preset == 3 && switch4 == true) {
+    if (presetSwitch() == 3 && customSwitch() == true) {
       rib = envelope_rib.next() *
       ( 
         saw1.next() +
@@ -200,7 +185,7 @@ AudioOutput_t updateAudio()
       ) >> 3;
     }
     // If preset is 3 and custom switch is in right position
-    else if (preset == 3 && switch4 == false) {
+    else if (presetSwitch() == 3 && customSwitch() == false) {
       rib = envelope_rib.next() *
       ( 
         (sine0.next() * rand(0, 5)) + 
@@ -220,7 +205,7 @@ AudioOutput_t updateAudio()
   } 
 
   // Master output
-  if (play_mode == 1) 
+  if (playmodeSwitch() == 1) 
   {
     return MonoOutput::from16Bit(rib);
   }

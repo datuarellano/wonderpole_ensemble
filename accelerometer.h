@@ -7,6 +7,8 @@ void accelerometer() {
   // Update accelerometer
   updateAccelerometer();
 
+  float octave = pitchKnob();
+
   // Constrain x and y values  
   accx = constrain(accx, -x_max, x_max);
   accy = constrain(accy, -y_max, y_max);
@@ -82,7 +84,7 @@ void accelerometer() {
   }
 
   // Set to zero volume when gate button is pressed
-  if (gate == true) {
+  if (gateButton() == true) {
     accx_fore_vol = 0;
     accx_back_vol = 0;
     accy_left_vol = 0;
@@ -90,6 +92,6 @@ void accelerometer() {
   }
 
   // LED2 ON/OFF when button is pressed
-  if (gate == true) digitalWrite(LED2_PIN, HIGH);
+  if (gateButton() == true) digitalWrite(LED2_PIN, HIGH);
   else digitalWrite(LED2_PIN, LOW);
 }

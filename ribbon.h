@@ -47,8 +47,10 @@ void ribbonMode() {
   // Create array of ribbon segments
   int seg[] = {100, 200, 300, 400, 500, 600, 700, 800};
 
+  float octave = pitchKnob();
+
   // Mode 1 subdivides the ribbon into 8 segments
-  if (rib_mode == 1) 
+  if (ribbonmodeSwitch() == 1) 
   {
     if (rib_val < seg[0]) {
       freq = freqs[0] * octave;
@@ -76,7 +78,7 @@ void ribbonMode() {
     }
   }
   // Mode 0 is linear and has no subdivisions
-  else if (rib_mode == 0) 
+  else if (ribbonmodeSwitch() == 0) 
   {
     freq = map(rib_val, rib_lowest, 1023, freqs[0] * octave, freqs[7] * octave * 4);
   }
@@ -100,7 +102,7 @@ void ribbon() {
     The Custom switch allows you to toggle between a sine and a 
     sawtooth wave (code is found in updateAudio() block in main .ino file).
   */
-  if (preset == 1)
+  if (presetSwitch() == 1)
   {
     sine0.setFreq(freq);
     saw0.setFreq(freq);
@@ -110,7 +112,7 @@ void ribbon() {
     rib_preset1.release = 400;
     envelope_rib.setTimes(rib_preset1.attack, rib_preset1.decay, rib_preset1.sustain, rib_preset1.release);
     envelope_rib.setLevels(255, 100, 100, 0);
-    if (gate == true)
+    if (gateButton() == true)
     {
       envelope_rib.noteOn();
       digitalWrite(LED2_PIN, HIGH);
@@ -127,8 +129,9 @@ void ribbon() {
     Default sound is same as Preset 1 except notes 
     are played staccato using an EventDelay timer.
   */
-  if (preset == 2) 
+  if (presetSwitch() == 2) 
   {
+    int tempo = tempoKnob();
     sine0.setFreq(freq);
     saw0.setFreq(freq);
     rib_preset2.attack = 1;
@@ -139,7 +142,7 @@ void ribbon() {
     envelope_rib.setLevels(255, 255, 255, 0);
     rib_preset2.duration = rib_preset2.attack + rib_preset2.decay + rib_preset2.sustain + rib_preset2.release + tempo; 
     noteDelay.set(rib_preset2.duration);
-    if (noteDelay.ready() && gate == true) 
+    if (noteDelay.ready() && gateButton() == true) 
     {
       noteDelay.start(rib_preset2.duration);   
       envelope_rib.noteOn();
@@ -161,8 +164,9 @@ void ribbon() {
     the switch labelled Custom; and the ribbon,
     all have an effect on the sound.
   */
-  if (preset == 3) 
+  if (presetSwitch() == 3) 
   {
+    int tempo = tempoKnob();
     sine1.setFreq(ribbonRead() * tempo);
     sine2.setFreq(ribbonRead() * 4);
     if (customKnob() > 512)
@@ -177,16 +181,16 @@ void ribbon() {
       saw1.setFreq(freq/2);
       sine0.setFreq(freq/16);
     }
-    rib_preset3.attack = tempoKnob();
+    rib_preset3.attack = tempo;
     rib_preset3.decay = 10;
     rib_preset3.sustain = customKnob();
     rib_preset3.release = customKnob();
     envelope_rib.setTimes(rib_preset3.attack, rib_preset3.decay, rib_preset3.sustain, rib_preset3.release);
-    if (gate == true) 
+    if (gateButton() == true) 
     {
       envelope_rib.noteOn();
       digitalWrite(LED2_PIN, HIGH);
-      if (switch4 == false)
+      if (customSwitch() == false)
       {
       /* Below is a blocking delay and will cause a nasty glitch effect
       The value of the delay is taken from the ribbon reading */

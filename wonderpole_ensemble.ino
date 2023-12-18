@@ -178,8 +178,10 @@ AudioOutput_t updateAudio()
   // Update envelopes
   envelope_rib.update();
   
-  // Declare submix variables
-  unsigned int acc0, acc1, acc2, acc3, xyz, rib;
+  // Mix output variables
+  // rib = ribbon mode
+  // xyz = accelerometer mode
+  unsigned int rib, xyz;
   
   // Ribbon mode submixes (PLAY MODE: 1)
   if (play_mode == 1) 
@@ -214,14 +216,14 @@ AudioOutput_t updateAudio()
     }
   }
   
-  // Accelerometer mode submixes (PLAY MODE: 0)
+  // Accelerometer mode output mix (PLAY MODE: 0)
   else
   {
-    acc0 = accx_fore_vol * (sine1.next() >> 3);
-    acc1 = accx_back_vol * (sine1.next() >> 3) + (sine2.next() >> 3);
-    acc2 = accy_left_vol * (sine3.next() >> 3) + (sine4.next() >> 3);
-    acc3 = accy_right_vol * (sine3.next() >> 3) + (sine4.next() >> 3);
-    xyz = acc0 + acc1 + acc2 + acc3;
+    xyz = 
+      (accx_fore_vol * (sine1.next() >> 3)) +
+      (accx_back_vol * (sine1.next() >> 3) + (sine2.next() >> 3)) +
+      (accy_left_vol * (sine3.next() >> 3) + (sine4.next() >> 3)) +
+      (accy_right_vol * (sine3.next() >> 3) + (sine4.next() >> 3));
   } 
 
   // Master output

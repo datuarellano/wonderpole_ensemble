@@ -79,9 +79,6 @@ Preset acc_preset1;
 Preset acc_preset2;
 Preset acc_preset3;
 
-// Global control variables
-int pot1, pot2, pot3, pot4;
-
 // Accelerometer variables
 int accx; 
 int accy; 
@@ -134,8 +131,7 @@ void setup()
 */
 void updateControl()
 {
-  // Run interface read and update functions
-  readPots();
+  // Update buttons and switches
   updateButtonsSwitches();
   
   // Switch between ribbon and accelerometer modes

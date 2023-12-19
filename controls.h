@@ -1,11 +1,8 @@
 /* ======================================================================
-  Read potentiometers  
+  Read a potentiometer. Returns an integer reading.
 */
-void readPots() {
-  pot1 = mozziAnalogRead(POT1_PIN);
-  pot2 = mozziAnalogRead(POT2_PIN);
-  pot3 = mozziAnalogRead(POT3_PIN);
-  pot4 = mozziAnalogRead(POT4_PIN);
+int readPot(int pot) {
+  return mozziAnalogRead(pot);
 }
 
 /* ======================================================================
@@ -41,6 +38,7 @@ bool gateButton()
   Remapped to min and max_tempo
 */
 unsigned int tempoKnob() {
+  int pot1 = readPot(POT1_PIN);
   return map(pot1, 0, 1023, min_tempo, max_tempo);
 }
 
@@ -49,6 +47,7 @@ unsigned int tempoKnob() {
   Returns 0.5, 1, or 2
 */
 float pitchKnob() {
+  int pot2 = readPot(POT2_PIN);
   if (pot2 >= 0 && pot2 < 250) return 0.5;
   else if (pot2 >= 251 && pot2 < 450) return 1;
   else return 2;
@@ -59,6 +58,7 @@ float pitchKnob() {
   Customize to your liking!
 */
 unsigned int customKnob() {
+  int pot3 = readPot(POT3_PIN);
   return pot3;
 }
 

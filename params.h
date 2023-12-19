@@ -18,7 +18,7 @@ int max_tempo = 1200;
 
 /*
   Set the pole's tilt (accelerometer mode) thresholds
-  Used in accelerometer.h --> accelerometerGo()
+  Used in accelerometer.h --> accelerometer()
 */ 
 int x_threshold = 20;
 int x_max = 90;
@@ -26,10 +26,12 @@ int y_threshold = 20;
 int y_max = 90;
 
 /* 
-  Set lowest and highest estimate readings of your ribbon.
+  Set lowest and highest estimate readings of your ribbon, and the high number to remap to
+  Used in ribbon.h --> ribbonRemap()
 */
 int rib_lowest = 50;
 int rib_highest = 500;
+int rib_mapto_high = 800;
 
 /*
   Set the frequencies of the accelerometer mode oscillators

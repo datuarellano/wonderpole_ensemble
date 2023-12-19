@@ -80,10 +80,7 @@ Preset acc_preset2;
 Preset acc_preset3;
 
 // Global control variables
-int freq, pot1, pot2, pot3, pot4;
-
-// Ribbon variables
-int rib_val;
+int pot1, pot2, pot3, pot4;
 
 // Accelerometer variables
 int accx; 

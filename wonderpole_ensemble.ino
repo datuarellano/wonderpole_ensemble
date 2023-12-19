@@ -83,8 +83,6 @@ Preset acc_preset3;
 int accx; 
 int accy; 
 int accz; 
-int new_accx;
-int new_accy;
 byte accy_left_vol;
 byte accy_right_vol;
 byte accx_fore_vol;

@@ -66,10 +66,12 @@ int ribbonMode() {
       freq = freqs[7] * octave;
     }
   }
-  // Mode 0 is linear and has no subdivisions
+  // Mode 0 is linear and continuous and has no segments/subdivisions
   else if (ribbonmodeSwitch() == 0) 
   {
-    freq = map(rib_val, rib_lowest, 1023, freqs[0] * octave, freqs[7] * octave * 4);
+    // This remaps the frequency range again
+    int factor = 4;
+    freq = map(rib_val, rib_lowest, rib_highest, freqs[0] * octave, freqs[7] * octave * factor);
   }
 
   return freq;

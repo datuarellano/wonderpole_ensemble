@@ -84,8 +84,6 @@ int freq, pot1, pot2, pot3, pot4;
 
 // Ribbon variables
 int rib_val;
-int rib_lowest;
-int rib_highest;
 
 // Accelerometer variables
 int accx; 

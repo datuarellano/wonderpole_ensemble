@@ -14,13 +14,7 @@ void ribbonCalibrate() {
   /* 
    Read the ribbon
   */
-  rib_val = ribbonRead();
-  /* 
-   Set lowest and highest estimate readings of your ribbon
-   Take note that these are "magic numbers". 
-  */
-  rib_lowest = 50;
-  rib_highest = 500;
+  rib_val = ribbonRead();  
   /*
    Remap the raw ribbon readings
   */

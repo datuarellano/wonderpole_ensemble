@@ -25,6 +25,12 @@ int x_max = 90;
 int y_threshold = 20;
 int y_max = 90;
 
+/* 
+  Set lowest and highest estimate readings of your ribbon.
+*/
+int rib_lowest = 50;
+int rib_highest = 500;
+
 /*
   Set the frequencies of the accelerometer mode oscillators
   Used in accelerometer.h
